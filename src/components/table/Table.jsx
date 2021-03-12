@@ -1,10 +1,11 @@
 import React from "react";
 import ItemForm from "./addItemForm/ItemForm";
+import ItemsList from "./items/Items";
 import {
   StyledTitle,
   StyledTable,
   StyledItem,
-  StyledInput,
+  StyledButton,
 } from "./TableStyled.styled";
 
 const Table = (props) => {
@@ -22,40 +23,17 @@ const Table = (props) => {
         <ItemsList {...props} />
       </StyledTable>
 
-      <ItemForm {...props} />
-      <button
+      {props.isAddItemActive ? <ItemForm {...props} /> : null}
+
+      <StyledButton
         onClick={() => {
-          props.addItem("item 4", 2, 40);
+          props.setAddItemsStatus(!props.isAddItemActive);
         }}
       >
         Добавить новый товар
-      </button>
+      </StyledButton>
     </>
   );
-};
-
-const Item = (props) => {
-  return (
-    <StyledItem>
-      <div>{props.item.name}</div>
-      <div>{props.item.amount}</div>
-      <div>{props.item.cost}</div>
-      <button
-        onClick={() => {
-          props.deleteItem(props.item.id);
-        }}
-      >
-        X
-      </button>
-    </StyledItem>
-  );
-};
-
-const ItemsList = (props) => {
-  let itemsList = props.items.map((item) => (
-    <Item key={item.id} {...props} item={item} />
-  ));
-  return itemsList;
 };
 
 export default Table;

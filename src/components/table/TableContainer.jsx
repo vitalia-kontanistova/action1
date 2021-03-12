@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import React, { useState } from "react";
 import Table from "./Table";
 
 function TableContainer(props) {
@@ -16,14 +15,14 @@ function TableContainer(props) {
   };
   let addItem = (name, amount, cost) => {
     let id = items[items.length - 1].id + 1;
-    let item = { id, name, amount, cost };
+    let costTransformed = parseFloat(cost).toFixed(2);
+
+    let item = { id, name, amount, cost: costTransformed };
 
     setItems((prevState) => {
       return [...prevState, item];
     });
   };
-
-  let addItemButtonClick = () => {};
 
   return (
     <Table
@@ -32,10 +31,9 @@ function TableContainer(props) {
       deleteItem={deleteItem}
       addItem={addItem}
       isAddItemActive={isAddItemActive}
+      setAddItemsStatus={setAddItemsStatus}
     />
   );
 }
-
-const mapState = (state) => ({});
 
 export default TableContainer;

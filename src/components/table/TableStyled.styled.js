@@ -4,13 +4,15 @@ import MaskedInput from "react-text-mask";
 
 export const StyledContent = styled.div`
   border: solid 1px plum; //--
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
+  padding: 40px;
 `;
 
 export const StyledTitle = styled.h1`
   font-size: 24px;
   text-align: center;
+  margin-bottom: 20px;
 `;
 
 export const StyledTable = styled.div``;
@@ -56,4 +58,11 @@ export const StyledForm = styled(Form)`
 export const StyledMaskedInput = styled(MaskedInput)`
   background: white;
   border: solid ${(props) => (props.error ? "red" : "grey")} 1px;
+`;
+
+export const StyledButton = styled.button`
+  padding: 2px 10px;
+  background: lightgray;
+  white-space: nowrap;
+  margin: 20px 0;
 `;

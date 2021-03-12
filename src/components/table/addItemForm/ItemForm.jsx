@@ -6,7 +6,8 @@ import MaskedCostInput from "./CustomInput/MaskedInput";
 import { StyledForm } from "../TableStyled.styled";
 
 const ItemForm = (props) => {
-  const costMask = [/\d/, /\d/, /\d/, ",", /\d/, /\d/];
+  const costMask = [/\d/, /\d/, /\d/, ".", /\d/, /\d/];
+  const costReg = /^\d{3}.\d{2}$/;
   const amountReg = /^\d+$/;
   const errors = {
     required: "Поле обязательно для заполнения",
@@ -23,12 +24,12 @@ const ItemForm = (props) => {
         validationSchema={yup.object({
           name: yup.string().min(2, errors.name).required(errors.required),
           amount: yup.string().matches(amountReg).notOneOf(["0"]).required(),
-          cost: yup.string().notOneOf(["000,00"]).required(),
+          cost: yup.string().matches(costReg).notOneOf(["000,00"]).required(),
         })}
         onSubmit={(values, { resetForm }) => {
           props.addItem(values.name, values.amount, values.cost);
+          props.setAddItemsStatus(false);
           resetForm();
-          // debugger;
         }}
       >
         {(props) => {
