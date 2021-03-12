@@ -1,18 +1,28 @@
 import React from "react";
-import { StyledTitle, StyledItem } from "./TableStyled.styled";
+import ItemForm from "./addItemForm/ItemForm";
+import {
+  StyledTitle,
+  StyledTable,
+  StyledItem,
+  StyledInput,
+} from "./TableStyled.styled";
 
 const Table = (props) => {
   return (
     <>
       <StyledTitle> Таблица товаров</StyledTitle>
-      <StyledItem header>
-        <div>Наименование товара</div>
-        <div>Кол-во</div>
-        <div>Стоимость</div>
-        <button onClick={() => {}}></button>
-      </StyledItem>
+      <StyledTable>
+        <StyledItem header>
+          <div>Наименование товара</div>
+          <div>Кол-во</div>
+          <div>Стоимость</div>
+          <button onClick={() => {}}></button>
+        </StyledItem>
 
-      <ItemsList {...props} />
+        <ItemsList {...props} />
+      </StyledTable>
+
+      <ItemForm {...props} />
       <button
         onClick={() => {
           props.addItem("item 4", 2, 40);
@@ -42,9 +52,10 @@ const Item = (props) => {
 };
 
 const ItemsList = (props) => {
-  return props.items.map((item) => {
-    return <Item key={item.id} {...props} item={item} />;
-  });
+  let itemsList = props.items.map((item) => (
+    <Item key={item.id} {...props} item={item} />
+  ));
+  return itemsList;
 };
 
 export default Table;

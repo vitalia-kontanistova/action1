@@ -9,6 +9,7 @@ function TableContainer(props) {
     { id: 2, name: "item 3", amount: 3, cost: 30 },
   ];
   let [items, setItems] = useState(itemsList);
+  let [isAddItemActive, setAddItemsStatus] = useState(false);
 
   let deleteItem = (id) => {
     setItems((prevState) => prevState.filter((item) => item.id !== id));
@@ -22,8 +23,16 @@ function TableContainer(props) {
     });
   };
 
+  let addItemButtonClick = () => {};
+
   return (
-    <Table {...props} items={items} deleteItem={deleteItem} addItem={addItem} />
+    <Table
+      {...props}
+      items={items}
+      deleteItem={deleteItem}
+      addItem={addItem}
+      isAddItemActive={isAddItemActive}
+    />
   );
 }
 
