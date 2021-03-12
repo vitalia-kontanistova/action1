@@ -14,14 +14,17 @@ function TableContainer(props) {
     setItems((prevState) => prevState.filter((item) => item.id !== id));
   };
   let addItem = (name, amount, cost) => {
-    let id = items[items.length - 1].id;
+    let id = items[items.length - 1].id + 1;
     let item = { id, name, amount, cost };
+
     setItems((prevState) => {
-      return prevState.push(item);
+      return [...prevState, item];
     });
   };
 
-  return <Table {...props} items={items} deleteItem={deleteItem} />;
+  return (
+    <Table {...props} items={items} deleteItem={deleteItem} addItem={addItem} />
+  );
 }
 
 const mapState = (state) => ({});

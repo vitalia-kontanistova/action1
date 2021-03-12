@@ -13,6 +13,13 @@ const Table = (props) => {
       </StyledItem>
 
       <ItemsList {...props} />
+      <button
+        onClick={() => {
+          props.addItem("item 4", 2, 40);
+        }}
+      >
+        Добавить новый товар
+      </button>
     </>
   );
 };
@@ -36,7 +43,7 @@ const Item = (props) => {
 
 const ItemsList = (props) => {
   return props.items.map((item) => {
-    return <Item {...props} item={item} />;
+    return <Item key={item.id} {...props} item={item} />;
   });
 };
 
