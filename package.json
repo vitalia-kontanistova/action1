@@ -17,6 +17,7 @@
     "web-vitals": "^1.0.1",
     "yup": "^0.32.9"
   },
+  "homepage": "https://vitalia-kontanistova.github.io/Action1/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
