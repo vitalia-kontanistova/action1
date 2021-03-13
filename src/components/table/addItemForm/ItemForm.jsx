@@ -1,49 +1,63 @@
 import React from "react";
 import * as yup from "yup";
 import { Formik } from "formik";
-import CustomInput from "./CustomInput/CustomInput";
-import MaskedCostInput from "./CustomInput/MaskedInput";
-import { StyledForm } from "../TableStyled.styled";
+import CustomInput from "./CustomInput";
+import {
+  StyledForm,
+  StyledButtonsBlock,
+  StyledTableButton,
+} from "../TableStyled.styled";
 
 const ItemForm = (props) => {
-  const costMask = [/\d/, /\d/, /\d/, ".", /\d/, /\d/];
-  const costReg = /^\d{3}.\d{2}$/;
-  const amountReg = /^\d+$/;
-  const errors = {
-    required: "Поле обязательно для заполнения",
-    name: "Выберете название подлинее",
-    amount: "Выберете название подлинее",
-    cost: "Выберете название подлинее",
-  };
+  const numberReg = /^\d+$/;
+  const stringReg = /[a-zA-Zа-яА-Я]/;
+  let separate = props.separate;
 
+  let id = props.item ? props.item.id : "";
+  let name = props.item ? props.item.name : "";
+  let amount = props.item ? props.item.amount : "";
+  let cost = props.item ? props.item.cost : "";
+  let submitChanges = (values) => {
+    if (id !== "" && id > -1) {
+      props.editItem(id, values.name, values.amount, values.cost);
+    } else {
+      props.addItem(values.name, values.amount, values.cost);
+    }
+  };
+  let dropChanges = () => {
+    if (id !== "" && id > -1) {
+      props.setItemStatus(false);
+    } else {
+      props.setAddItemsStatus(false);
+    }
+  };
   return (
     <>
       <Formik
         {...props}
-        initialValues={{ name: "", amount: "", cost: "" }}
+        initialValues={{ name: name, amount: amount, cost: cost }}
         validationSchema={yup.object({
-          name: yup.string().min(2, errors.name).required(errors.required),
-          amount: yup.string().matches(amountReg).notOneOf(["0"]).required(),
-          cost: yup.string().matches(costReg).notOneOf(["000,00"]).required(),
+          name: yup.string().min(2).matches(stringReg).required(),
+          amount: yup.string().matches(numberReg).notOneOf(["0"]).required(),
+          cost: yup.string().matches(numberReg).notOneOf(["0"]).required(),
         })}
-        onSubmit={(values, { resetForm }) => {
-          props.addItem(values.name, values.amount, values.cost);
-          props.setAddItemsStatus(false);
-          resetForm();
+        onSubmit={(values) => {
+          submitChanges(values);
+          dropChanges();
         }}
       >
         {(props) => {
           return (
-            <StyledForm method="POST">
-              <CustomInput type="text" name="name" placeholder="наименование" />
+            <StyledForm separate={separate} method="POST">
+              <CustomInput type="text" name="name" placeholder="товар" />
               <CustomInput type="number" name="amount" placeholder="кол-во" />
-              <MaskedCostInput
-                mask={costMask}
-                type="text"
-                name="cost"
-                placeholder="цена"
-              />
-              <button type="submit">V</button>
+              <CustomInput type="number" name="cost" placeholder="цена" />
+              <StyledButtonsBlock>
+                <StyledTableButton type="submit">V</StyledTableButton>
+                <StyledTableButton red onClick={dropChanges}>
+                  X
+                </StyledTableButton>
+              </StyledButtonsBlock>
             </StyledForm>
           );
         }}

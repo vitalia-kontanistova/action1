@@ -1,11 +1,13 @@
 import React from "react";
 import ItemForm from "./addItemForm/ItemForm";
-import ItemsList from "./items/Items";
+import ItemContainer from "../item/ItemContainer";
 import {
   StyledTitle,
   StyledTable,
-  StyledItem,
+  StyledHeader,
   StyledButton,
+  StyledTotalCost,
+  StyledBlock,
 } from "./TableStyled.styled";
 
 const Table = (props) => {
@@ -13,27 +15,39 @@ const Table = (props) => {
     <>
       <StyledTitle> Таблица товаров</StyledTitle>
       <StyledTable>
-        <StyledItem header>
-          <div>Наименование товара</div>
-          <div>Кол-во</div>
+        <StyledHeader>
+          <div>Товар</div>
+          <div>Количество</div>
           <div>Стоимость</div>
-          <button onClick={() => {}}></button>
-        </StyledItem>
+          <div></div>
+        </StyledHeader>
 
         <ItemsList {...props} />
       </StyledTable>
 
-      {props.isAddItemActive ? <ItemForm {...props} /> : null}
+      {props.isAddItemActive ? <ItemForm separate {...props} /> : null}
 
-      <StyledButton
-        onClick={() => {
-          props.setAddItemsStatus(!props.isAddItemActive);
-        }}
-      >
-        Добавить новый товар
-      </StyledButton>
+      <StyledBlock>
+        <StyledButton
+          onClick={() => {
+            props.setAddItemsStatus(!props.isAddItemActive);
+          }}
+        >
+          Добавить новый товар
+        </StyledButton>
+        <StyledTotalCost>
+          Общая сумма: <span>${props.totalCost}</span>
+        </StyledTotalCost>
+      </StyledBlock>
     </>
   );
+};
+
+const ItemsList = (props) => {
+  let itemsList = props.items.map((item) => (
+    <ItemContainer key={item.id} {...props} item={item} />
+  ));
+  return itemsList;
 };
 
 export default Table;

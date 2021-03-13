@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "./Table";
 
 function TableContainer(props) {
@@ -9,19 +9,37 @@ function TableContainer(props) {
   ];
   let [items, setItems] = useState(itemsList);
   let [isAddItemActive, setAddItemsStatus] = useState(false);
+  let [totalCost, setTotalCost] = useState(0);
+
+  useEffect(() => {
+    let cost = 0;
+    items.forEach((item) => {
+      cost += item.cost * item.amount;
+    });
+
+    setTotalCost(cost);
+  }, [items]);
 
   let deleteItem = (id) => {
     setItems((prevState) => prevState.filter((item) => item.id !== id));
   };
   let addItem = (name, amount, cost) => {
     let id = items[items.length - 1].id + 1;
-    let costTransformed = parseFloat(cost).toFixed(2);
-
-    let item = { id, name, amount, cost: costTransformed };
+    let item = { id, name, amount, cost };
 
     setItems((prevState) => {
       return [...prevState, item];
     });
+  };
+  let editItem = (id, name, amount, cost) => {
+    let currentItem = { id, name, amount, cost };
+    let index = items.findIndex((item) => item.id === id);
+
+    if (index > -1) {
+      let itemsList = items.slice();
+      itemsList.splice(index, 1, currentItem);
+      setItems(itemsList);
+    }
   };
 
   return (
@@ -32,6 +50,8 @@ function TableContainer(props) {
       addItem={addItem}
       isAddItemActive={isAddItemActive}
       setAddItemsStatus={setAddItemsStatus}
+      totalCost={totalCost}
+      editItem={editItem}
     />
   );
 }

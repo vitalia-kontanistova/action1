@@ -1,6 +1,6 @@
 import React from "react";
 import { useField } from "formik";
-import { StyledInput } from "../../TableStyled.styled";
+import { StyledInput } from "../TableStyled.styled";
 
 const CustomInput = (props) => {
   const [field, meta] = useField(props);
