@@ -1,14 +1,31 @@
 import React, { useState } from "react";
-import ItemForm from "../table/addItemForm/ItemForm";
+import ItemFormContainer from "../itemForm/ItemFormContainer";
 import Item from "./Item";
 
 function ItemContainer(props) {
-  let [isItemActive, setItemStatus] = useState(false);
+  let [isEditItemActive, setEditItemStatus] = useState(false);
+  let changeItem = () => {
+    setEditItemStatus(true);
+  };
+  let deleteItem = () => {
+    props.deleteItem(props.item.id);
+  };
 
-  if (isItemActive) {
-    return <ItemForm {...props} setItemStatus={setItemStatus} />;
+  if (isEditItemActive) {
+    return (
+      <ItemFormContainer
+        item={props.item}
+        editItem={props.editItem}
+        addItem={props.addItem}
+        setAddItemsStatus={props.setAddItemsStatus}
+        setEditItemStatus={setEditItemStatus}
+        separate={props.separate}
+      />
+    );
   }
-  return <Item {...props} setItemStatus={setItemStatus} />;
+  return (
+    <Item item={props.item} changeItem={changeItem} deleteItem={deleteItem} />
+  );
 }
 
 export default ItemContainer;

@@ -83,6 +83,7 @@ export const StyledItem = styled(StyledHeader)`
   }
   button {
     background: none;
+    height: 100%;
     :hover {
       background: ${colors.blue};
     }
@@ -118,6 +119,7 @@ export const StyledInput = styled.input`
   padding: 20px;
   color: ${colors.darkBlue};
   min-width: 50px;
+  -moz-appearance: textfield;
 
   ::-webkit-outer-spin-button,
   ::-webkit-inner-spin-button {
