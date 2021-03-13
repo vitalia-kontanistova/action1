@@ -16,7 +16,7 @@ let colors = {
 export const StyledWrapper = styled.div`
   width: 100vw;
   min-height: 100vh;
-  padding: 100px 60px;
+  padding: 60px 60px;
   color: ${colors.black};
 
   @media (max-width: 600px) {
@@ -99,8 +99,8 @@ export const StyledForm = styled(Form)`
   display: grid;
   grid-template-columns: 3fr 2fr 2fr 100px;
 
-  border-top: 2px solid ${colors.darkBlue};
-  border-bottom: 2px solid ${colors.darkBlue};
+  border-top: 1px solid ${colors.darkBlue};
+  border-bottom: 1px solid ${colors.darkBlue};
   overflow: hidden;
   margin-top: ${(props) => (props.separate ? "40px" : "")};
   border: ${(props) => (props.separate ? `2px solid ${colors.darkBlue}` : "")};
